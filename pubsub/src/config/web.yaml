@@ -1,0 +1,4 @@
+news:
+  naver: 
+    url: https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=101
+    class: section_list_ranking

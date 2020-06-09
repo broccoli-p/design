@@ -6,21 +6,9 @@ class Message(metaclass=ABCMeta):
         pass
 
 class JobMessage(Message):
-    def __init__(self, job, obj):
+    def __init__(self, job, **kwargs):
         self.job = job
-        self.information = obj
+        self.data = kwargs
 
     def process(self, worker):
-        print("JobMessage")
-
-class WebMessage(Message):
-    def __init__(self, job, obj):
-        self.job = job
-        self.information = obj
-
-    def process(self, worker):
-        worker.crawler()
-
-class QuitMessage(Message):
-    def process(self,worker):
-        worker.quit()
+        worker.action(self.data)

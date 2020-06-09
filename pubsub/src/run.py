@@ -1,14 +1,30 @@
-import sys, os
-from core.process import *
+from core import Crowler, Bot
+import atexit
+
+def foo():
+    print('Ended process(call foo())')
+    
+atexit.register(foo)
 
 class CoreFactory():
-    newsCrawer = NewsCrawler()
+    def __init__(self):
+        self.crowler = Crowler(self)
+        self.bot = Bot()
     def run(self):
-        self.newsCrawer.run(self)
+        self.crowler.run()
+        self.bot.run()
+    
     def stop(self):
-        self.newsCrawer.stop(self)
+        self.crowler.stop()
+        self.bot.stop()
 
 if __name__ == '__main__':
-    core = CoreFactory()
-    core.run()
-    print("End process")
+    try:
+        global core
+        core = CoreFactory()
+        core.run()
+    except KeyboardInterrupt:
+        core.stop()
+        print("Stop!!!")
+    except Exception as err:
+        print(err)
